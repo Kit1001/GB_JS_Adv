@@ -1,35 +1,40 @@
-const prefetchedGoods = [
-  {id: 1, title: 'Shirt', price: 150, img: 'shirt.jpeg'},
-  {id: 2, title: 'Shoes', price: 250, img: 'shoes.jpeg'},
-  {id: 3, title: 'Socks', price: 50, img: 'socks.jpeg'},
-  {id: 4, title: 'Jacket', price: 350, img: 'jacket.jpg'},
-];
-
 class Good {
-  constructor(item) {
-    this.id = item.id;
-    this.title = item.title;
-    this.price = item.price;
-    this.img = item.img;
+  constructor({id_product, price, product_name}) {
+    this.id = id_product;
+    this.title = product_name;
+    this.price = price;
   }
 
   createMarkDown = () =>
     `<div class="goods-item">
-    <img src="imgs/${this.img}" alt="good's image"/>
+    <img src="imgs/placeholder-image.png" alt="good's image"/>
     <h3>${this.title}</h3>
     <p>${this.price}</p>
     </div>`
-
 }
 
 class GoodsList {
   static goods = [];
   static container = '';
+  static productsListURL = '';
 
-  static fetchGoods(goods) {
-    for (const good of goods) {
-      this.goods.push(new Good(good))
-    }
+  static fetchGoods() {
+    fetch(this.productsListURL).then(data => data.json()).then(
+      data => {
+        console.log(data)
+        for (const good of data) {
+          this.goods.push(new Good(good))
+        }
+      }).catch(error => {
+      console.log(error)
+    });
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        if (this.goods.length > 0) {
+          resolve();
+        }
+      }, 1000);
+    })
   }
 
   static render = () => document.querySelector(this.container).innerHTML =
@@ -63,7 +68,8 @@ class BasketItem {
 }
 
 
-GoodsList.fetchGoods(prefetchedGoods);  // берем список товаров из prefetched goods
+GoodsList.productsListURL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json'
 GoodsList.container = '.goods-list';  // задаем название контейнера для добавления в него новой разметки
-GoodsList.render();  // добавляем созданную разметку на страницу
+
+GoodsList.fetchGoods().then(() => GoodsList.render());
 console.log(GoodsList.goodsPriceSum());  // вывод в консоль суммы цен товаров
