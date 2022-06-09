@@ -1,3 +1,6 @@
+const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/';
+
+
 class Good {
   constructor({id_product, price, product_name}) {
     this.id = id_product;
@@ -15,8 +18,8 @@ class Good {
 
 class GoodsList {
   static goods = [];
-  static container = '';
-  static productsListURL = '';
+  static container = '.goods-list';
+  static productsListURL = `${API}/catalogData.json`;
 
   static fetchGoods() {
     fetch(this.productsListURL).then(data => data.json()).then(
@@ -33,7 +36,7 @@ class GoodsList {
         if (this.goods.length > 0) {
           resolve();
         }
-      }, 1000);
+      }, 300);
     })
   }
 
@@ -47,29 +50,56 @@ class GoodsList {
 
 class Basket {
   static cart;
+  static basketLink = `${API}/getBasket.json`;
+  static container = '.cart';
 
-  static render() {
+  static fetchCart() {
+    fetch(this.basketLink).then(data => data.json())
+      .then(data => {
+        this.cart = data;
+        const contents = [];
+        for (const item of data.contents) {
+          contents.push(new BasketItem(item))
+        }
+        this.cart.contents = contents;
+      })
+    return new Promise(resolve => setTimeout(() => resolve(), 300))
   };
 
-  static getSumOfCart() {
+  static render = () => {
+    document.querySelector(this.container).innerHTML = this.cart.contents.map(item => item.markdown()).join('\n')
   };
 }
 
 class BasketItem {
-  constructor(goodId) {
-    this.id = goodId;
+  constructor({id_product, product_name, price, quantity}) {
+    this.id = id_product;
+    this.title = product_name;
+    this.price = price;
+    this.quantity = quantity;
   }
 
-  addToCart() {
-  };
-
-  removeFromCart() {
-  };
+  markdown = () => `
+    <div class="cart-item" data-id="${this.id}">
+      <img src="imgs/placeholder-image.png" alt="">
+      <div class="text-block">
+        <h3>${this.title}</h3>
+        <p>Quantity: ${this.quantity}</p>
+        <p>Price: ${this.price}</p>
+      </div>
+      <div class="func-block">
+        <h3>${this.price * this.quantity}</h3>
+        <button>Delete</button>
+      </div>
+    </div>
+  `
 }
 
+GoodsList.fetchGoods()
+  .then(() => GoodsList.render())
+  .then(() => Basket.fetchCart())
+  .then(() => Basket.render());
 
-GoodsList.productsListURL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json'
-GoodsList.container = '.goods-list';  // задаем название контейнера для добавления в него новой разметки
-
-GoodsList.fetchGoods().then(() => GoodsList.render());
-console.log(GoodsList.goodsPriceSum());  // вывод в консоль суммы цен товаров
+document.querySelector('.menu-element-cart').addEventListener("click", (() => {
+  document.querySelector('.cart').toggleAttribute('hidden');
+}));
