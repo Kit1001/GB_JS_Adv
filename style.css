@@ -5,6 +5,10 @@ body {
     min-height:720px;
 }
 
+.invisible{
+    display: none;
+}
+
 .menu-bar{
     margin: 0;
     padding: 1rem;
@@ -13,18 +17,20 @@ body {
     justify-content: flex-end;
 }
 
-.menu-element.cart{
+.menu-element-cart{
     color: #444444;
+    margin-right: 2rem;
+    padding: 0.33rem;
 }
 
 .menu-cart-button{
-    margin-right: 2rem;
     font-size: 1.5rem;
     font-weight: 600;
     text-transform: uppercase;
     border: none;
     font-family: sans-serif;
     color: inherit;
+    text-shadow: inherit;
     background-color: inherit;
 }
 
@@ -33,9 +39,52 @@ body {
 }
 
 
-.menu-element.cart:hover,
-.menu-element.cart:active{
+.menu-element-cart:hover,
+.menu-element-cart:active{
     color: black;
+    text-shadow: grey 1px 1px;
+}
+
+.cart {
+    min-width: 10rem;
+    min-height: 1rem;
+    background-color: #bdbdbd;
+    box-shadow: 0 0 3px  black;
+    position: absolute;
+    right: 0;
+    top: 4rem;
+    margin: 0 3rem 0 0;
+}
+
+.cart-item{
+    display: flex;
+    height: 120px;
+    margin: 1rem 0;
+    align-items: center;
+}
+
+.cart-item p {
+    margin: 0.33rem 0;
+}
+
+.cart-item img{
+    width: 100px;
+    height: 100px;
+    margin: 0 1rem 0 0;
+    object-fit: cover;
+
+}
+.cart-item .text-block{
+    margin: 0 1rem 0 0;
+}
+
+.cart-item .func-block{
+    display: flex;
+    height: 100%;
+    margin-right: 1rem;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
 }
 
 main {
