@@ -33,26 +33,27 @@ const app = new Vue({
       const find = this.cart.contents.find(el => el.id_product === product.id_product);
       if (find) {
         find.quantity++
-        this.cart.countGoods = this.cart.contents.reduce((acc, obj) => acc + obj.quantity, 0);
-        this.cart.amount = this.cart.contents.reduce((acc, obj) => acc + (obj.quantity * obj.price), 0);
+        this.recalculateCart();
       } else {
         const newProduct = {...product};
         newProduct.quantity = 1;
         this.cart.contents.push(newProduct);
-        this.cart.countGoods = this.cart.contents.reduce((acc, obj) => acc + obj.quantity, 0);
-        this.cart.amount = this.cart.contents.reduce((acc, obj) => acc + (obj.quantity * obj.price), 0);
+        this.recalculateCart();
       }
     },
     removeProductFromCart(product) {
       const find = this.cart.contents.find(el => el.id_product === product.id_product);
       if (find.quantity > 1) {
         find.quantity--
-        this.cart.countGoods = this.cart.contents.reduce((acc, obj) => acc + obj.quantity, 0);
-        this.cart.amount = this.cart.contents.reduce((acc, obj) => acc + (obj.quantity * obj.price), 0);
-      }
-      else{
+        this.recalculateCart();
+      } else {
         this.cart.contents = this.cart.contents.filter(el => el.id_product !== product.id_product);
+        this.recalculateCart();
       }
+    },
+    recalculateCart() {
+      this.cart.countGoods = this.cart.contents.reduce((acc, obj) => acc + obj.quantity, 0);
+      this.cart.amount = this.cart.contents.reduce((acc, obj) => acc + (obj.quantity * obj.price), 0);
     }
   },
   mounted() {
