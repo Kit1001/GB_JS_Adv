@@ -9,8 +9,7 @@ const app = new Vue({
     filtered: [],
     cart: [],
     imgCatalog: 'https://via.placeholder.com/200x150',
-    imgCart: 'https://via.placeholder.com/50x100',
-    userSearch: '',
+    imgCart: 'https://via.placeholder.com/100x100',
     show: false
   },
   methods: {
@@ -254,20 +253,5 @@ const app = new Vue({
 //             <p class="product-quantity">Quantity: ${this.quantity}</p>
 //         <p class="product-single-price">$${this.price} each</p>
 //         </div>
-//         </div>
-//         <div class="right-block">
-//             <p class="product-price">$${this.quantity*this.price}</p>
-//             <button class="del-btn" data-id="${this.id_product}">&times;</button>
-//         </div>
-//         </div>`
-//     }
-// }
-// const list2 = {
-//     ProductsList: ProductItem,
-//     Cart: CartItem
-// };
-//
-// let cart = new Cart();
-// let products = new ProductsList(cart);
-// products.getJson(`getProducts.json`).then(data => products.handleData(data));
-
+//       </div>
+//     </div>`
