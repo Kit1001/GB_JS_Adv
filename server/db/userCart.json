@@ -3,15 +3,7 @@
     "countGoods": 2,
     "contents": [
         {
-            "quantity": 1,
-            "id_product": 11,
-            "product_name": "Milk bowl",
-            "img_product": "img/product_1.jpg",
-            "price": 7500,
-            "imgPath": "img/11.jpg"
-        },
-        {
-            "quantity": 1,
+            "quantity": 2,
             "id_product": 12,
             "product_name": "cappuccino set",
             "img_product": "img/product_2.jpg",
