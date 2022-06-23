@@ -38,38 +38,20 @@ Vue.component('cart', {
                         }
                     })
             }
-
-            // this.$parent.getJson(`${API}/addToBasket.json`)
-            //     .then(data => {
-            //         if(data.result === 1){
-            //             let find = this.cartItems.find(el => el.id_product === item.id_product);
-            //             if(find){
-            //                 find.quantity++;
-            //             } else {
-            //                 const prod = Object.assign({quantity: 1}, item);
-            //                 this.cartItems.push(prod)
-            //             }
-            //         }
-            //     })
         },
         remove(item){
-            this.$parent.getJson(`${API}/addToBasket.json`)
-                .then(data => {
-                    if (data.result === 1) {
-                        if(item.quantity>1){
-                            item.quantity--;
-                        } else {
-                            this.cartItems.splice(this.cartItems.indexOf(item), 1);
+            let find = this.cartItems.find(el => el.id_product === item.id_product);
+            if(find){
+                this.$parent.deleteJson(`/api/cart/${find.id_product}`, {quantity: -1})
+                    .then(data => {
+                        if(data.result === 1){
+                            find.quantity--
+                            if(find.quantity === 0){
+                              this.cartItems = this.cartItems.filter(el => el.id_product !== item.id_product)
+                            }
                         }
-                    }
-                })
+                    })}
         },
-        // cartCount() {
-        //     return this.cartItems.reduce((summ, item) => summ + item.quantity, 0);
-        //   },
-        //   cartSumm() {
-        //     return this.cartItems.reduce((summ, item) => summ + item.quantity*item.price, 0);
-        //   }
     },
     template: `
     <div>
