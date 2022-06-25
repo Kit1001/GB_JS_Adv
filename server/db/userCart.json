@@ -1,0 +1,30 @@
+{
+    "amount": 46600,
+    "countGoods": 2,
+    "contents": [
+        {
+            "quantity": 2,
+            "id_product": 12,
+            "product_name": "cappuccino set",
+            "img_product": "img/product_2.jpg",
+            "price": 12800,
+            "imgPath": "img/12.jpg"
+        },
+        {
+            "quantity": 3,
+            "id_product": 11,
+            "product_name": "Milk bowl",
+            "img_product": "img/product_1.jpg",
+            "price": 7500,
+            "imgPath": "img/11.jpg"
+        },
+        {
+            "quantity": 3,
+            "id_product": 13,
+            "product_name": "contour vase",
+            "img_product": "img/product_3.jpg",
+            "price": 5380,
+            "imgPath": "img/13.jpg"
+        }
+    ]
+}
